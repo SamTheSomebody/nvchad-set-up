@@ -37,4 +37,9 @@ return {
       require "custom.configs.lspconfig"      -- load your custom LSP servers
     end,
   },
+
+  {
+    "tpope/vim-commentary",
+    lazy = false,
+  },
 }

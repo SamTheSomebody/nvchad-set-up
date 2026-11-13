@@ -1,16 +1,13 @@
-local lspconfig = require "lspconfig"
 local default_lsp = require "nvchad.configs.lspconfig"
 
-local servers = { "lua_ls", "svelte", "ts_ls", }
+local servers = { "lua_ls", "svelte", "ts_ls" }
 
-local function on_attach(client, bufnr)
-  default_lsp.on_attach(client, bufnr)
-end
-
+-- Apply NvChad's capabilities/on_init to all servers and enable them.
+-- on_attach is handled globally by NvChad via the LspAttach autocmd in defaults().
 for _, server in ipairs(servers) do
-  local opts = {
-    on_attach = on_attach,
+  vim.lsp.config(server, {
     capabilities = default_lsp.capabilities,
-  }
-  lspconfig[server].setup(opts)
+    on_init = default_lsp.on_init,
+  })
+  vim.lsp.enable(server)
 end
